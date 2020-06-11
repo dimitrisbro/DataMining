@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.model_selection import cross_val_score
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error,accuracy_score
 from sklearn.preprocessing import StandardScaler
 
 rawData = pd.read_csv('winequality-red.csv')
@@ -29,17 +29,28 @@ model1 = svm.SVC(kernel='linear')
 model1.fit(train_X, train_y)
 prediction1 = model1.predict(val_X)
 print('SVC + linear', precision_recall_fscore_support(prediction1, val_y, average='micro'))
+print(accuracy_score(prediction1, val_y))
+
 #print(mean_squared_error(prediction1, val_y))
 
-model2 = svm.LinearSVC(max_iter=10000)
+model2 = svm.LinearSVC(max_iter=100000)
 model2.fit(train_X, train_y)
 prediction2 = model2.predict(val_X)
 print('LinearSVC', precision_recall_fscore_support(prediction2, val_y, average='micro'))
+print('LinearSVC', accuracy_score(prediction2, val_y))
 #print(mean_squared_error(prediction2, val_y))
 
 model3 = svm.SVC(kernel='rbf', gamma=0.8)
 model3.fit(train_X, train_y)
 prediction3 = model3.predict(val_X)
 print('SVC + rbf', precision_recall_fscore_support(prediction3, val_y, average='micro'))
+print(accuracy_score(prediction3, val_y))
+
+model4 = svm.SVC(coef0=7,random_state=0)
+model4.fit(train_X, train_y)
+prediction4 = model4.predict(val_X)
+print('SVC + poly', precision_recall_fscore_support(prediction4, val_y, average='micro'))
+print(accuracy_score(prediction4, val_y))
+
 #print(mean_squared_error(prediction3, val_y))
 # '''
